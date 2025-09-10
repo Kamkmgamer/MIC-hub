@@ -1,29 +1,115 @@
-# Create T3 App
+# Mic-Hub
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A web application for managing microphone campaigns and users. Built with the T3 Stack.
 
-## What's next? How do I make an app with this?
+## Tech Stack
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+-   [Next.js](https://nextjs.org/) - React framework for production.
+-   [React](https://react.dev/) - A library for building user interfaces.
+-   [tRPC](https://trpc.io/) - End-to-end typesafe APIs.
+-   [Drizzle ORM](https://orm.drizzle.team/) - TypeScript ORM for SQL databases.
+-   [PostgreSQL](https://www.postgresql.org/) - Open source object-relational database.
+-   [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+-   [Clerk](https://clerk.com/) - User management and authentication.
+-   [TypeScript](https://www.typescriptlang.org/) - Typed superset of JavaScript.
+-   [ESLint](https://eslint.org/) - Pluggable linting utility for JavaScript and JSX.
+-   [Prettier](https://prettier.io/) - An opinionated code formatter.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-## Learn More
+### Prerequisites
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+-   [Node.js](https://nodejs.org/en/) (v20.x or later recommended)
+-   [pnpm](https://pnpm.io/installation)
+-   [Docker](https://www.docker.com/products/docker-desktop/) or [Podman](https://podman.io/) for running the database.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Installation
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+1.  **Clone the repository:**
 
-## How do I deploy this?
+    ```bash
+    git clone <repository-url>
+    cd mic-hub
+    ```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+2.  **Install dependencies:**
+
+    ```bash
+    pnpm install
+    ```
+
+3.  **Set up environment variables:**
+
+    Copy the example environment file and update it with your configuration.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    You will need to add your Clerk credentials and other environment-specific variables.
+
+### Database Setup
+
+This project uses PostgreSQL as the database. The `start-database.sh` script simplifies running it in a Docker container.
+
+1.  **Start the database container:**
+
+    This script will parse your `.env` file for the `DATABASE_URL` and start a Postgres container with the correct credentials.
+
+    On macOS/Linux:
+    ```bash
+    ./start-database.sh
+    ```
+
+    On Windows (using WSL):
+    ```bash
+    wsl ./start-database.sh
+    ```
+
+2.  **Run database migrations:**
+
+    This command applies any pending database schema changes.
+
+    ```bash
+    pnpm run db:push
+    ```
+    *Note: The `package.json` also includes `db:migrate` which uses Drizzle Kit's migration files. `db:push` directly applies schema changes without creating migration files, which is often simpler for development.*
+
+
+### Running the Application
+
+Once the setup is complete, you can start the development server.
+
+```bash
+pnpm run dev
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Available Scripts
+
+| Script           | Description                                                |
+| ---------------- | ---------------------------------------------------------- |
+| `pnpm run dev`     | Starts the development server with hot-reloading.          |
+| `pnpm run build`   | Builds the application for production.                     |
+| `pnpm run start`   | Starts a production server.                                |
+| `pnpm run preview` | Builds and starts a production server.                     |
+| `pnpm run lint`    | Lints the codebase using Next.js's built-in ESLint config. |
+| `pnpm run format:write` | Formats all files using Prettier.                        |
+| `pnpm run check`   | Runs linting and type-checking.                            |
+| `pnpm run typecheck` | Runs TypeScript compiler to check for type errors.         |
+| `pnpm run db:generate` | Generates SQL migration files from your Drizzle schema.    |
+| `pnpm run db:migrate`  | Applies generated migrations to the database.              |
+| `pnpm run db:push`     | Pushes schema changes directly to the database (dev only). |
+| `pnpm run db:studio`   | Opens the Drizzle Studio to browse your database.          |
+
+
+## Deployment
+
+Follow the official T3 Stack deployment guides for more information.
+
+-   [Vercel](https://create.t3.gg/en/deployment/vercel)
+-   [Netlify](https://create.t3.gg/en/deployment/netlify)
+-   [Docker](https://create.t3.gg/en/deployment/docker)
